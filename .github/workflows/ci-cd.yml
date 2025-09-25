@@ -28,8 +28,7 @@ jobs:
       - name: Run Bandit SAST Scan
         run: |
           pip install bandit
-          bandit -r . --severity-level high --confidence-level high -f json -o
-          bandit_results.json || true
+          bandit -r . --severity-level high --confidence-level high -f json -o bandit_results.json || true
 
       - name: Check Bandit Results
         id: bandit-check
