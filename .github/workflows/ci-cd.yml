@@ -29,13 +29,13 @@ jobs:
       - name: Run Bandit SAST Scan
         run: |
           pip install bandit
-          bandit -r . --severity-level high --confidende-level high -f json -o bandit_results.json || true
+          bandit -r . --severity-level high --confidence-level high -f json -o bandit_results.json || true
 
       - name: Check Bandit Results
         id: bandit-check
         run: |
           if [-f bandit_results.json]; then
-            if jq -e '.results[] | select(.issue_confidence == "HIGH" and .issue_severity== "HIGH")' bandit_results.json; then
+            if jq -e '.results[] | select(.issue_confidence == 'HIGH' and .issue_severity== 'HIGH')' bandit_results.json; then
               echo "Bandit found critical vulnerabilities! Failing the pipeline."
               exit 1
             else
