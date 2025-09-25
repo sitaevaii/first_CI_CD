@@ -35,13 +35,15 @@ jobs:
         id: bandit-check
         run: |
           if [-f bandit_results.json]; then
-            if jq -e '.resultd[] | select(.issue_confidence == "HIGH" and .issue_severity == "HIGH")' bandit_results.json; then
-              echo "Bandit found criticsl vulnerabilities! Falling the pipeline."
+            if jq -e '.results[] | select(.issue_confidence == "HIGH" and .issue_severity== "HIGH")' bandit_results.json; then
+              echo "Bandit found critical vulnerabilities! Failing the pipeline."
               exit 1
             else
               echo "No critical vulnerabilities found by Bandit."
+            fi
           else
             echo "Bandit report not found. Assuming no issues."
+          fi
 
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@master
